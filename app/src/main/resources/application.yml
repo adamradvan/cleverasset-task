@@ -2,25 +2,37 @@ spring:
   application:
     name: intersection-app
 
+logging:
+  level:
+    root: INFO
+    eu.radvan.cleverassettask: DEBUG
 
 intersection-app:
   leaving:
-    tick: 2s
+    tick: 1s
   semaphores:
     - type: NORTH_SOUTH
-      tick: 10s
+      next-state: WEST_EAST
+      on-green:
+        - NORTH_TO_SOUTH
+        - SOUTH_TO_NORTH
+      tick: 8s
     - type: WEST_EAST
-      tick: 15s
-  cars:
+      next-state: NORTH_SOUTH
+      on-green:
+        - WEST_TO_EAST
+        - EAST_TO_WEST
+      tick: 10s
+  car-lanes:
     - type: NORTH_TO_SOUTH
-      tick: 1m
-      amount: 6
-    - type: SOUTH_TO_NORTH
-      tick: 1m
-      amount: 3
-    - type: WEST_TO_EAST
-      tick: 1m
-      amount: 7
-    - type: EAST_TO_WEST
-      tick: 1m
+      tick: 7s
       amount: 8
+    - type: SOUTH_TO_NORTH
+      tick: 8s
+      amount: 10
+    - type: WEST_TO_EAST
+      tick: 9s
+      amount: 4
+    - type: EAST_TO_WEST
+      tick: 10s
+      amount: 5
