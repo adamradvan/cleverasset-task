@@ -1,0 +1,75 @@
+semafor smer 1 - `t1` time
+semafor smer 2 - `t2` time
+
+- tuto sa kazdy `t1` / `t2` vystreli event ze ukoncuje sa cinnost semaforu
+- na takyto event musi reagovat nejaky handler ktory prepne context krizovatky
+  - prepne context v zmysle nastavi ze ktore "gates" sa otvoria
+  - otvorene gates znamena ze sa spusta smycka ktora v danom intervale vyhadzuje spravne auta z queue (ak je ich gate otvoreny)
+
+
+auto sever  - every `c1` cars per min
+auto juh    - every `c2` cars per min
+auto zapad  - every `c3` cars per min
+auto vychod - every `c4` cars per min
+
+- slucka ktora len kazdu minutu doplni queu o dany pocet aut
+- auta su vo fronte (FIFO) a tak ju aj opustaju
+
+auto opusti queue - every `s1` sek
+- kazdych `s1` sek sa vystreli event ze moze auto opustit queue
+
+---
+Events
+
+- Car 
+    - Car arrives to the intersection
+        - `CarArrivesEvent`
+        - event is fired every `car.tick` times
+        - add `car.amount` times a new car instance to the queue with the properties from the `car`
+    - Car leaves the intersection     
+        - `CarLeavesEvent`
+        - event is fired every `leaving.tick` times
+        - signals that car may leave the queue (if the Semaphore of the path is green)
+        - remove first instance in the queue (check if queue is not empty)
+- Semaphore
+    - Semaphore switches color
+        - `SemaphoreChangedEvent`
+            - event is fired when the control of the flow is changed from one semaphore to the other
+            - tricky part is to start the countdown `t1` / `t2` until next event
+            - when switch happens, cars from the relevant direction are taken out of the queue
+- 
+
+
+
+
+---
+application.yml config props
+```yml
+intersection-app:
+  leaving:  # cars leave intersection every tick (if they have a green light)
+    tick: 2s
+  semaphores:
+    - type: NORTH_SOUTH
+      tick: 10s
+    - type: WEST_EAST
+      tick: 15s
+  cars:
+    - type: NORTH_TO_SOUTH
+      tick: 1m
+      amount: 6
+    - type: SOUTH_TO_NORTH
+      tick: 1m
+      amount: 3
+    - type: WEST_TO_EAST
+      tick: 1m
+      amount: 7
+    - type: EAST_TO_WEST
+      tick: 1m
+      amount: 8
+```
+
+
+
+
+
+
