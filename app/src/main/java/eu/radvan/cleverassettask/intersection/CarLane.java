@@ -1,5 +1,6 @@
 package eu.radvan.cleverassettask.intersection;
 
+import eu.radvan.cleverassettask.intersection.properties.IntersectionProperties;
 import eu.radvan.cleverassettask.model.Car;
 import eu.radvan.cleverassettask.model.CarLaneType;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,6 @@ public class CarLane {
         this.properties = properties;
     }
 
-    // scheduled manually in CarLaneHandler (instead of using @Scheduled)
     public void addCarsToTheQueue() {
         IntStream.range(0, this.properties.amount())
                 .mapToObj(i -> new Car(this.properties.type()))
@@ -29,7 +29,6 @@ public class CarLane {
 
         log.info("{} | Generated cars, new queue length: {}", properties.type().getLabel(), carQueue.size());
     }
-
 
     public void dequeueCar() {
         carQueue.poll();

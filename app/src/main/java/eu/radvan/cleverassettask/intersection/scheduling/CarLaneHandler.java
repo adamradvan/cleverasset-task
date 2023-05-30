@@ -1,7 +1,8 @@
-package eu.radvan.cleverassettask.intersection;
+package eu.radvan.cleverassettask.intersection.scheduling;
 
 
 import eu.radvan.cleverassettask.event.CarMayLeaveEvent;
+import eu.radvan.cleverassettask.intersection.CarLane;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -24,9 +25,6 @@ public class CarLaneHandler {
         this.carLanes = carLanes;
     }
 
-    // I had to declare scheduling this way instead of @Scheduled because the annotation requires static string,
-    // and it is not possible to provide a straightforward data to the annotation
-    // since we create 4 different beans with the same impl but different configuration properties
     @Async
     @EventListener(ApplicationReadyEvent.class)
     public void addNewCarsToQueues() {

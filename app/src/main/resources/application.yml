@@ -9,30 +9,35 @@ logging:
 
 intersection-app:
   leaving:
-    tick: 1s
+    tick: 2s                      # time interval `s1` of leaving cars
   semaphores:
-    - type: NORTH_SOUTH
-      next-state: WEST_EAST
-      on-green:
+    - type: NORTH_SOUTH           # "name" of the semaphore
+      next-state: WEST_EAST       # next semaphore (based on a principle of a Finite Automata)
+      on-green:                   # what car lanes have a green light together
         - NORTH_TO_SOUTH
         - SOUTH_TO_NORTH
-      tick: 8s
-    - type: WEST_EAST
-      next-state: NORTH_SOUTH
-      on-green:
+      tick: 8s                    # time `t1`
+
+    - type: WEST_EAST             # "name" of the semaphore
+      next-state: NORTH_SOUTH     # next semaphore (based on a principle of a Finite Automata)
+      on-green:                   # what car lanes have a green light together
         - WEST_TO_EAST
         - EAST_TO_WEST
-      tick: 10s
+      tick: 10s                   # time `t2`
+
   car-lanes:
-    - type: NORTH_TO_SOUTH
-      tick: 7s
-      amount: 8
-    - type: SOUTH_TO_NORTH
-      tick: 8s
-      amount: 10
-    - type: WEST_TO_EAST
-      tick: 9s
-      amount: 4
-    - type: EAST_TO_WEST
-      tick: 10s
-      amount: 5
+    - type: NORTH_TO_SOUTH        # "name" of the car lane
+      tick: 7s                    # time interval of arriving cars
+      amount: 8                   # `c1` cars amount per `tick`
+
+    - type: SOUTH_TO_NORTH        # "name" of the car lane
+      tick: 8s                    # time interval of arriving cars
+      amount: 10                  # `c2` cars amount per `tick`
+
+    - type: WEST_TO_EAST          # "name" of the car lane
+      tick: 9s                    # time interval of arriving cars
+      amount: 4                   # `c3` cars amount per `tick`
+
+    - type: EAST_TO_WEST          # "name" of the car lane
+      tick: 10s                   # time interval of arriving cars
+      amount: 5                   # `c4` cars amount per `tick`

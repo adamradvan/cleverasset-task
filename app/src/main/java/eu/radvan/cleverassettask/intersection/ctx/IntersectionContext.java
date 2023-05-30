@@ -1,7 +1,7 @@
-package eu.radvan.cleverassettask.intersection;
+package eu.radvan.cleverassettask.intersection.ctx;
 
 import eu.radvan.cleverassettask.event.SemaphoreGreenStartedEvent;
-import lombok.Getter;
+import eu.radvan.cleverassettask.intersection.Semaphore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,6 +43,5 @@ public class IntersectionContext {
         log.info("Publishing event | Semaphore '{}' has a GREEN light.", semaphore);
         eventPublisher.publishEvent(new SemaphoreGreenStartedEvent(this, semaphore));
     }
-
 
 }

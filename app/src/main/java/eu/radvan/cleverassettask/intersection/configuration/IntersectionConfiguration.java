@@ -1,5 +1,12 @@
-package eu.radvan.cleverassettask.intersection;
+package eu.radvan.cleverassettask.intersection.configuration;
 
+import eu.radvan.cleverassettask.intersection.CarLane;
+import eu.radvan.cleverassettask.intersection.Semaphore;
+import eu.radvan.cleverassettask.intersection.ctx.IntersectionContext;
+import eu.radvan.cleverassettask.intersection.properties.IntersectionProperties;
+import eu.radvan.cleverassettask.intersection.scheduling.CarLaneHandler;
+import eu.radvan.cleverassettask.intersection.scheduling.CarMayLeavePublisher;
+import eu.radvan.cleverassettask.intersection.scheduling.SemaphoreHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -57,8 +64,8 @@ public class IntersectionConfiguration {
     }
 
     @Bean
-    public SemaphoreSwitcher semaphoreSwitcher(TaskScheduler taskScheduler, List<Semaphore> semaphores, IntersectionContext context) {
-        return new SemaphoreSwitcher(taskScheduler, semaphores, context);
+    public SemaphoreHandler semaphoreSwitcher(TaskScheduler taskScheduler, List<Semaphore> semaphores, IntersectionContext context) {
+        return new SemaphoreHandler(taskScheduler, semaphores, context);
     }
 
     @Bean
@@ -67,7 +74,7 @@ public class IntersectionConfiguration {
     }
 
     @Bean
-    public CarLeavingPublisher carSemaphoreWatcher(ApplicationEventPublisher eventPublisher, TaskScheduler taskScheduler, IntersectionContext context) {
-        return new CarLeavingPublisher(properties.leaving.tick(), taskScheduler, eventPublisher, context);
+    public CarMayLeavePublisher carSemaphoreWatcher(ApplicationEventPublisher eventPublisher, TaskScheduler taskScheduler, IntersectionContext context) {
+        return new CarMayLeavePublisher(properties.leaving.tick(), taskScheduler, eventPublisher, context);
     }
 }

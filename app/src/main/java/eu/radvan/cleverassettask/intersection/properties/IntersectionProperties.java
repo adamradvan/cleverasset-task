@@ -1,4 +1,4 @@
-package eu.radvan.cleverassettask.intersection;
+package eu.radvan.cleverassettask.intersection.properties;
 
 import eu.radvan.cleverassettask.model.CarLaneType;
 import eu.radvan.cleverassettask.model.SemaphoreType;
